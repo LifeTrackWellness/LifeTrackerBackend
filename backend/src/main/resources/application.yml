@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: wellness-backend
+
+  docker:
+    compose:
+      enabled: false
+
+  datasource:
+
+    url: ${DATABASE_URL:jdbc:postgresql://ep-blue-smoke-ai796w3o-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require}
+    username: ${DATABASE_USER:neondb_owner}
+    password: ${DATABASE_PASSWORD:npg_iPGNydZQ4BM0}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      keepaliveTime: 30000
+      maximum-pool-size: 5
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: 8080
+
