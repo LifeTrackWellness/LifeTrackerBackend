@@ -7,7 +7,6 @@ spring:
       enabled: false
 
   datasource:
-
     url: ${DATABASE_URL:jdbc:postgresql://ep-blue-smoke-ai796w3o-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require}
     username: ${DATABASE_USER:neondb_owner}
     password: ${DATABASE_PASSWORD:npg_iPGNydZQ4BM0}
@@ -27,4 +26,3 @@ spring:
 
 server:
   port: 8080
-

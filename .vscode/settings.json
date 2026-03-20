@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "plyconfig.json": "jsonc"
+    },
+    "java.format.settings.url": ".vscode/java-formatter.xml"
+}

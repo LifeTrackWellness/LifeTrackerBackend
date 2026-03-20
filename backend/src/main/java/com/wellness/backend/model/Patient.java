@@ -1,5 +1,7 @@
 package com.wellness.backend.model;
 
+import com.wellness.backend.enums.DeactivationReason;
+import com.wellness.backend.enums.PatientStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -29,18 +31,32 @@ public class Patient {
 
     @NotBlank(message = "El documento es obligatorio")
     @Column(unique = true, nullable = false)
-    private String identityDocument; // Para el criterio de "documento único"
+    private String identityDocument; // para el criterio de "documento único"
 
-    @Email(message = "Debe ser un correo válido")
+    @Email(message = "Debe ser un correo valido")
     private String email;
 
     private String phoneNumber;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status = "Activo"; // Criterio: 'Activo' por defecto
+    private PatientStatus status = PatientStatus.ACTIVO;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "deactivation_reason")
+    private DeactivationReason deactivationReason;
 
+    @Column(name = "deactivated_at")
+    private LocalDateTime deactivatedAt;
 
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
 
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        if (this.status == null)
+            this.status = PatientStatus.ACTIVO;
+    }
 
 }
