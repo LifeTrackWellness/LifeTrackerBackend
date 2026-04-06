@@ -22,4 +22,4 @@ jobs:
 
       - name: Compilar con Maven
         run: mvn clean package -DskipTests
-        working-directory: backend/backend
+        working-directory: backend
