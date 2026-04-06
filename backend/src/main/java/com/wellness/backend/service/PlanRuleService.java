@@ -57,14 +57,17 @@ public PlanRule toggleRule(Long planRuleId, boolean active)
 
 // Guardar configuración completa del plan
 @Transactional
-public List<PlanRule>saveConfiguration(Long planId, List<PlanRule> rules)
-    {
-        HabitPlan plan = habitPlanRepository.findById(planId)
-                .orElseThrow(() -> new RuntimeException("Plan no encontrado: " + planId));
-        for (PlanRule rule : rules) {
-            rule.setHabitPlan(plan);
+public List<PlanRule> saveConfiguration(Long planId, List<PlanRule> rules) {
+    HabitPlan plan = habitPlanRepository.findById(planId)
+            .orElseThrow(() -> new RuntimeException("Plan no encontrado: " + planId));
+
+    for (PlanRule rule : rules) {
+        rule.setHabitPlan(plan);
+        if (rule.getId() != null && rule.getId() == 0) {
+            rule.setId(null);
         }
-        return planRuleRepository.saveAll(rules);
     }
+    return planRuleRepository.saveAll(rules);
+}
 
 }

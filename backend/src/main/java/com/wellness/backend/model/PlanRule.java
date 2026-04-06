@@ -21,8 +21,8 @@ public class PlanRule {
     private HabitPlan habitPlan;
 
 
-    @Column(nullable = false)
-    private Integer umbralP ;
+    @Column(name = "umbralp", nullable = false)
+    private Integer umbralPersonalizado;
 
     @Column(nullable = false)
     private boolean active ;
