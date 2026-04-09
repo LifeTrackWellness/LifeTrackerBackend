@@ -73,6 +73,7 @@ public class PatientService {
     }
 
     // Reactivar paciente - permite actualizar info básica
+
     @Transactional
     public Patient reactivatePatient(Long id, ReactivatePatientRequest request) {
         Patient patient = patientRepository.findById(id)
@@ -87,6 +88,8 @@ public class PatientService {
             patient.setName(request.getName());
         if (request.getLastName() != null && !request.getLastName().isBlank())
             patient.setLastName(request.getLastName());
+        if (request.getDocumentType() != null)
+            patient.setDocumentType(request.getDocumentType());
         if (request.getPhoneNumber() != null)
             patient.setPhoneNumber(request.getPhoneNumber());
         if (request.getEmail() != null)
@@ -111,10 +114,7 @@ public class PatientService {
                 p.getName(),
                 p.getIdentityDocument(),
                 (p.getClinicalInfo() != null) ? p.getClinicalInfo().getMainCondition() : "Sin asignar",
-                p.getStatus()
-        )).collect(Collectors.toList());
+                p.getStatus())).collect(Collectors.toList());
     }
-
-
 
 }
