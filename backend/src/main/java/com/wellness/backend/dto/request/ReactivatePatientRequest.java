@@ -1,5 +1,6 @@
 package com.wellness.backend.dto.request;
 
+import com.wellness.backend.enums.DocumentType;
 import com.wellness.backend.enums.HealthStatus;
 import lombok.Data;
 
@@ -7,6 +8,7 @@ import lombok.Data;
 public class ReactivatePatientRequest {
     private String name;
     private String lastName;
+    private DocumentType documentType;
     private String phoneNumber;
     private String email;
     private String mainCondition;
