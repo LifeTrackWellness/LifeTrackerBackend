@@ -1,5 +1,6 @@
 package com.wellness.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.wellness.backend.enums.DocumentType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -47,7 +48,7 @@ public class Guardian {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @OneToOne
-    @JoinColumn(name = "patient_id", unique = true, nullable = false)
+    @ManyToOne
+    @JsonBackReference
     private Patient patient;
 }

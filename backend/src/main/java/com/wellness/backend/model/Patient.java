@@ -1,5 +1,6 @@
 package com.wellness.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.wellness.backend.enums.DeactivationReason;
 import com.wellness.backend.enums.PatientStatus;
 import com.wellness.backend.enums.DocumentType;
@@ -11,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "patients")
@@ -71,7 +73,8 @@ public class Patient {
     @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
     private ClinicalInfo clinicalInfo;
 
-    @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Guardian guardian;
+    @OneToMany(mappedBy = "patient")
+    @JsonManagedReference
+    private List<Guardian> guardians;
 
 }
