@@ -7,6 +7,7 @@ import com.wellness.backend.enums.PatientStatus;
 import com.wellness.backend.exception.BusinessException;
 import com.wellness.backend.exception.ResourceNotFoundException;
 import com.wellness.backend.model.Patient;
+import com.wellness.backend.repository.ConsentTemplateRepository;
 import com.wellness.backend.repository.PatientRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,10 +18,15 @@ import java.util.stream.Collectors;
 @Service
 public class PatientService {
     private final PatientRepository patientRepository;
+    private final ConsentService consentService;
 
-    public PatientService(PatientRepository patientRepository) {
+
+
+    public PatientService(PatientRepository patientRepository, ConsentService consentService) {
         this.patientRepository = patientRepository;
+        this.consentService = consentService;
     }
+
 
     // CRITERIO: Registrar un paciente con validación de documento único
     @Transactional
@@ -29,7 +35,9 @@ public class PatientService {
             throw new BusinessException(
                     "Error: El documento de identidad " + patient.getIdentityDocument() + " ya está registrado.");
         }
-        return patientRepository.save(patient);
+        Patient savedPatient = patientRepository.save(patient);
+        consentService.generateConsentsForPatient(savedPatient); // ← línea nueva
+        return savedPatient;
     }
 
     // CRITERIO: El terapeuta puede editar datos de contacto (correo, celular)
